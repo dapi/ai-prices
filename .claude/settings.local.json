@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(python3:*)",
+      "Bash(brew:*)",
+      "Bash(identify:*)",
+      "Bash(convert:*)",
+      "Bash(shots/claude-start.png -geometry 3456x1936+100+140 -composite )",
+      "Bash(shots/claude-start-framed.png)",
+      "Bash(magick:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
