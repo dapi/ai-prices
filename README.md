@@ -12,3 +12,6 @@
 Сделал это так:
 
 ![Claude Start Screenshot](shots/claude-start-framed.png)
+
+# PS
+В следующий раз надо начинать с этого шаблона - https://github.com/dapi/ai-first-workspace-template
