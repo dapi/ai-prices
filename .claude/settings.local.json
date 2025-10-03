@@ -36,7 +36,8 @@
       "WebFetch(domain:www.cerebra.ai)",
       "WebFetch(domain:replicate.com)",
       "WebFetch(domain:www.helicone.ai)",
-      "WebFetch(domain:www.arize.ai)"
+      "WebFetch(domain:www.arize.ai)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
