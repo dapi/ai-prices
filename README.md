@@ -13,5 +13,9 @@
 
 ![Claude Start Screenshot](shots/claude-start-framed.png)
 
+# Источники цен:
+
+* https://gist.github.com/t3dotgg/a4bb252e590320e223e71c595e60e6be
+
 # PS
 В следующий раз надо начинать с этого шаблона - https://github.com/dapi/ai-first-workspace-template
