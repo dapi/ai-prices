@@ -1,2 +1,257 @@
-<html>
-  <body>Works</body></html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Models Price Comparison | Сравнение цен AI моделей</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>🤖 AI Price Compare</h1>
+                    <p class="subtitle">Сравнение цен и характеристик AI моделей</p>
+                </div>
+                <div class="header-actions">
+                    <button class="lang-toggle" id="langToggle">EN</button>
+                    <button class="theme-toggle" id="themeToggle">☀️</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content-wrapper">
+                <div class="hero-text">
+                    <h2 class="hero-title">Экономьте до 90% на API вызовах AI моделей</h2>
+                    <p class="hero-subtitle">Для разработчиков, стартапов и AI-компаний</p>
+                    <button class="cta-button" onclick="document.querySelector('.models-section').scrollIntoView({behavior: 'smooth'})">
+                        Найти оптимальную модель
+                    </button>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <span class="stat-value" id="maxSavings">-</span>
+                        <span class="stat-label">💰 Макс. экономия</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="popularModels">-</span>
+                        <span class="stat-label">🔥 Популярные</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="bestDeals">-</span>
+                        <span class="stat-label">📉 Лучшие ROI</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-filters">
+                <button class="quick-filter-btn" data-filter="cheapest">💰 Самые дешевые</button>
+                <button class="quick-filter-btn" data-filter="fastest">⚡ Самые быстрые</button>
+                <button class="quick-filter-btn" data-filter="best-roi">🎯 Лучшее соотношение</button>
+                <button class="quick-filter-btn" data-filter="rf-available">🇷🇺 Доступно в РФ</button>
+            </div>
+
+            <div class="mini-calculator">
+                <h3 class="calc-title">Быстрый подбор модели</h3>
+                <div class="calc-inputs-row">
+                    <div class="calc-input-group">
+                        <label>Задача</label>
+                        <select id="miniCalcTask" class="mini-calc-select">
+                            <option value="text">✍️ Генерация текста</option>
+                            <option value="chat">💬 Чат-бот</option>
+                            <option value="data">📊 Анализ данных</option>
+                            <option value="vision">🖼️ Работа с изображениями</option>
+                        </select>
+                    </div>
+                    <div class="calc-input-group">
+                        <label>Объем токенов: <span id="tokenVolume">1M</span></label>
+                        <input type="range" id="miniCalcVolume" min="1" max="10" value="1" step="1" class="volume-slider">
+                    </div>
+                </div>
+                <div id="miniCalcResults" class="mini-calc-results">
+                    <!-- Results will be inserted here -->
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Поиск по названию модели или провайдеру..." />
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="content-grid">
+                <!-- Filters Sidebar -->
+                <aside class="filters">
+                    <div class="filter-header">
+                        <h3>Фильтры</h3>
+                        <button class="reset-filters" id="resetFilters">Сбросить</button>
+                    </div>
+
+                    <!-- Provider Filter -->
+                    <div class="filter-group">
+                        <h4>Провайдер</h4>
+                        <div id="providerFilters" class="checkbox-group"></div>
+                    </div>
+
+                    <!-- RF Availability -->
+                    <div class="filter-group">
+                        <h4>Доступность в РФ</h4>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" class="rf-filter" value="Да"> Да</label>
+                            <label><input type="checkbox" class="rf-filter" value="VPN"> VPN</label>
+                        </div>
+                    </div>
+
+                    <!-- Modality -->
+                    <div class="filter-group">
+                        <h4>Модальность</h4>
+                        <div id="modalityFilters" class="checkbox-group"></div>
+                    </div>
+
+                    <!-- Speed -->
+                    <div class="filter-group">
+                        <h4>Скорость</h4>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" class="speed-filter" value="Fast"> Fast</label>
+                            <label><input type="checkbox" class="speed-filter" value="Medium"> Medium</label>
+                            <label><input type="checkbox" class="speed-filter" value="Slow"> Slow</label>
+                        </div>
+                    </div>
+
+                    <!-- Quality -->
+                    <div class="filter-group">
+                        <h4>Качество</h4>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" class="quality-filter" value="Very High"> Very High</label>
+                            <label><input type="checkbox" class="quality-filter" value="High"> High</label>
+                            <label><input type="checkbox" class="quality-filter" value="Medium"> Medium</label>
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="filter-group">
+                        <h4>Цена input ($/1M)</h4>
+                        <div class="price-range">
+                            <input type="range" id="priceMin" min="0" max="10" step="0.1" value="0">
+                            <input type="range" id="priceMax" min="0" max="10" step="0.1" value="10">
+                            <div class="price-labels">
+                                <span id="priceMinLabel">$0</span>
+                                <span id="priceMaxLabel">$10</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculator Button -->
+                    <button class="calculator-btn" id="calcToggle">💰 Калькулятор стоимости</button>
+                </aside>
+
+                <!-- Models Table -->
+                <div class="models-section">
+                    <div class="table-header">
+                        <h2>Модели (<span id="resultCount">0</span>)</h2>
+                        <div class="view-controls">
+                            <button class="view-btn active" data-view="table">📋</button>
+                            <button class="view-btn" data-view="cards">🎴</button>
+                            <button class="view-btn" data-view="chart">📊</button>
+                        </div>
+                    </div>
+
+                    <!-- Table View -->
+                    <div class="table-container" id="tableView">
+                        <table class="models-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAll"></th>
+                                    <th class="sortable" data-sort="provider">Провайдер</th>
+                                    <th class="sortable" data-sort="model">Модель</th>
+                                    <th class="sortable" data-sort="input">💰 Цена</th>
+                                    <th class="sortable" data-sort="speed">⚡ Скорость</th>
+                                    <th class="sortable" data-sort="quality">⭐ Качество</th>
+                                    <th>🇷🇺 РФ</th>
+                                    <th class="sortable" data-sort="roi">📊 ROI</th>
+                                    <th>Use Cases</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modelsTableBody">
+                                <!-- Data loaded via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Cards View -->
+                    <div class="cards-container hidden" id="cardsView">
+                        <!-- Cards loaded via JS -->
+                    </div>
+
+                    <!-- Chart View -->
+                    <div class="chart-container hidden" id="chartView">
+                        <canvas id="priceChart"></canvas>
+                    </div>
+
+                    <!-- Comparison Bar -->
+                    <div class="comparison-bar hidden" id="comparisonBar">
+                        <div class="comparison-content">
+                            <span id="comparisonCount">0 выбрано</span>
+                            <button class="btn-primary" id="compareBtn">Сравнить</button>
+                            <button class="btn-secondary" id="clearComparison">Очистить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Calculator Modal -->
+    <div class="modal hidden" id="calculatorModal">
+        <div class="modal-content calc-container glass-card">
+            <div class="modal-header">
+                <h3>💰 Калькулятор стоимости</h3>
+                <button class="modal-close" id="calcClose">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="calc-inputs">
+                    <div class="input-group">
+                        <label>Input tokens</label>
+                        <input type="number" id="calcInputTokens" value="1000000" step="100000">
+                    </div>
+                    <div class="input-group">
+                        <label>Output tokens</label>
+                        <input type="number" id="calcOutputTokens" value="1000000" step="100000">
+                    </div>
+                </div>
+                <div class="calc-results" id="calcResults">
+                    <!-- Results loaded via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Modal -->
+    <div class="modal hidden" id="comparisonModal">
+        <div class="modal-content large glass-card">
+            <div class="modal-header">
+                <h3>⚖️ Сравнение моделей</h3>
+                <button class="modal-close" id="compClose">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="comparisonTable">
+                    <!-- Comparison table loaded via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

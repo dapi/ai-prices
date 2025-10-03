@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Pre-commit hook для автоматического обновления providers.csv при изменении models.csv
+
+# Проверяем, был ли изменён models.csv
+if git diff --cached --name-only | grep -q "^models.csv$"; then
+    echo "📝 Обнаружены изменения в models.csv"
+    echo "🔄 Запускаю обновление providers.csv..."
+
+    # Запускаем скрипт обновления
+    python3 scripts/update_providers.py
+
+    # Проверяем, изменился ли providers.csv
+    if git diff --name-only | grep -q "^providers.csv$"; then
+        echo "✅ providers.csv обновлён"
+        # Добавляем обновлённый файл в коммит
+        git add providers.csv
+        echo "📦 providers.csv добавлен в коммит"
+    else
+        echo "ℹ️  providers.csv не изменился"
+    fi
+fi
+
+exit 0

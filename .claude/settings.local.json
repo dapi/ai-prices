@@ -37,9 +37,39 @@
       "WebFetch(domain:replicate.com)",
       "WebFetch(domain:www.helicone.ai)",
       "WebFetch(domain:www.arize.ai)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(chmod:*)",
+      "Bash(git config:*)",
+      "Bash(rm:*)",
+      "SlashCommand(/sc:research:*)",
+      "mcp__sequential-thinking__sequentialthinking",
+      "WebFetch(domain:www.tavily.com)",
+      "mcp__chrome-devtools__new_page",
+      "mcp__chrome-devtools__take_snapshot",
+      "mcp__chrome-devtools__fill",
+      "mcp__chrome-devtools__click",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__wait_for",
+      "mcp__chrome-devtools__evaluate_script",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash(curl:*)",
+      "WebFetch(domain:rostelecom.ru)",
+      "WebFetch(domain:vc.ru)",
+      "WebFetch(domain:habr.com)",
+      "mcp__playwright__browser_navigate"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "auto_edit_paths": [
+      "./www/**/*.html",
+      "./www/**/*.js",
+      "./www/**/*.css",
+      "./www/**/*.json",
+      "./www/**/*.md"
+    ]
   }
 }

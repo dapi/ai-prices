@@ -1,0 +1,12 @@
+Компания,Доступность в РФ,Валюта,Поддерживаемые модальности,API документация URL,Официальный сайт,Страна регистрации,Методы аутентификации,Языковая поддержка,Основная специализация
+Anthropic,VPN,USD,multimodal,https://www.anthropic.com/api/pricing,https://www.anthropic.com,USA,API key,100+,"Advanced Reasoning, Coding, Research"
+Baidu,Да,CNY,multimodal,https://cloud.baidu.com/doc/WENXINWORKSHOP/s/jlil56u11,https://cloud.baidu.com,China,API key,50+,"Chinese Market, Enterprise AI"
+DeepSeek,Да,USD,multimodal,https://platform.deepseek.com/api-docs,https://www.deepseek.com,China,API key,100+,"Reasoning, General AI"
+Google,Да,USD,"image,multimodal,text,video",https://ai.google.dev/pricing,https://ai.google.dev,USA,API key,100+,"General AI, Vision, Video Generation"
+Moonshot,Да,USD,text,https://platform.moonshot.cn/docs,https://www.moonshot.cn,China,API key,50+,"Long Context, General AI"
+OpenAI,VPN,USD,"multimodal,text",https://openai.com/api/pricing,https://openai.com,USA,API key,100+,"General AI, Business Solutions"
+Qwen,Да,USD,"multimodal,text","https://help.aliyun.com/zh/model-developer/world-model/""general",https://qwenlm.github.io,China,API key,50+,"Coding, Reasoning, General AI"
+Sber,Да,RUB,multimodal,https://developers.sber.ru/docs/ru/gigachat/api,https://developers.sber.ru,Russia,API key,50+,"Russian Market, Business AI"
+Tencent,Да,USD,"image,multimodal",https://cloud.tencent.com/document/product/1729,https://cloud.tencent.com,China,API key,50+,"Chinese Market, Enterprise AI"
+Yandex,Да,RUB,multimodal,https://yandex.cloud/ru/docs/yandexgpt/pricing,https://yandex.cloud,Russia,API key,50+,"Russian Market, General AI"
+Z.ai,Да,USD,multimodal,https://open.bigmodel.cn/dev/api,https://bigmodel.cn,China,API key,50+,Chinese AI Development
