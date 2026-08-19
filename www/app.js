@@ -7,35 +7,103 @@ let currentView = 'table';
 // ===== Load and Parse CSV =====
 async function loadModels() {
     try {
-        const response = await fetch('../models.csv');
+        console.log('Loading models data...');
+        const response = await fetch('/models.csv');
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const csvText = await response.text();
+        console.log('CSV data loaded, size:', csvText.length, 'characters');
 
         const lines = csvText.trim().split('\n');
-        const headers = lines[0].split(',');
+        if (lines.length < 2) {
+            throw new Error('CSV file must contain at least a header and one data row');
+        }
 
-        allModels = lines.slice(1).map(line => {
-            const values = parseCSVLine(line);
-            const model = {};
+        console.log('Total lines:', lines.length);
 
-            headers.forEach((header, index) => {
-                model[header.trim()] = values[index]?.trim() || '';
-            });
+        const headers = parseCSVLine(lines[0]);
+        console.log('Headers:', headers);
 
-            // Convert numeric fields
-            model['Цена за 1M input токенов'] = parseFloat(model['Цена за 1M input токенов']) || 0;
-            model['Цена за 1M output токенов'] = parseFloat(model['Цена за 1M output токенов']) || 0;
-            model['Контекстное окно'] = parseInt(model['Контекстное окно']) || 0;
+        allModels = lines.slice(1).map((line, index) => {
+            try {
+                const values = parseCSVLine(line);
+                const model = {};
 
-            return model;
-        });
+                headers.forEach((header, idx) => {
+                    const cleanHeader = header.trim();
+                    const cleanValue = values[idx]?.trim() || '';
+                    model[cleanHeader] = cleanValue;
+                });
+
+                // Convert numeric fields with validation
+                model['Цена за 1M input токенов'] = parseFloat(model['Цена за 1M input токенов']) || 0;
+                model['Цена за 1M output токенов'] = parseFloat(model['Цена за 1M output токенов']) || 0;
+                model['Контекстное окно'] = parseInt(model['Контекстное окно']) || 0;
+
+                // Add model ID for better identification
+                model.id = index + 1;
+
+                // Calculate additional metrics
+                model.roi = calculateROI(model);
+
+                return model;
+            } catch (error) {
+                console.error(`Error parsing line ${index + 2}:`, error);
+                return null;
+            }
+        }).filter(model => model !== null); // Remove failed parses
+
+        console.log('Successfully parsed', allModels.length, 'models');
 
         filteredModels = [...allModels];
         initializeFilters();
         updateStats();
         renderModels();
+
+        // Hide loading indicator
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        if (loadingIndicator) {
+            loadingIndicator.classList.add('hidden');
+        }
+
+        // Show success message in console
+        console.log('✅ Models data loaded successfully!');
+
     } catch (error) {
-        console.error('Error loading models:', error);
+        console.error('❌ Error loading models:', error);
+
+        // Show user-friendly error message
+        const errorElement = document.createElement('div');
+        errorElement.className = 'error-message';
+        errorElement.innerHTML = `
+            <div style="background: #fee; border: 1px solid #fcc; padding: 1rem; border-radius: 8px; margin: 1rem;">
+                <h3>⚠️ Ошибка загрузки данных</h3>
+                <p>Не удалось загрузить файл с моделями AI. Проверьте путь к файлу data/models.csv</p>
+                <p>Детали: ${error.message}</p>
+            </div>
+        `;
+        document.querySelector('.hero').insertAdjacentElement('afterbegin', errorElement);
     }
+}
+
+function calculateROI(model) {
+    const price = model['Цена за 1M input токенов'];
+    const quality = getQualityScore(model['Качество']);
+    return price > 0 ? (quality / price) * 100 : 0;
+}
+
+function getQualityScore(quality) {
+    const qualityMap = {
+        'Very High': 5,
+        'High': 4,
+        'Medium': 3,
+        'Low': 2,
+        'Very Low': 1
+    };
+    return qualityMap[quality] || 3;
 }
 
 function parseCSVLine(line) {

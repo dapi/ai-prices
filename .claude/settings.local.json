@@ -60,7 +60,11 @@
       "WebFetch(domain:rostelecom.ru)",
       "WebFetch(domain:vc.ru)",
       "WebFetch(domain:habr.com)",
-      "mcp__playwright__browser_navigate"
+      "mcp__playwright__browser_navigate",
+      "mcp__chrome-mcp__new_page",
+      "mcp__chrome-mcp__take_snapshot",
+      "mcp__chrome-mcp__navigate_page",
+      "mcp__chrome-mcp__list_network_requests"
     ],
     "deny": [],
     "ask": [],
